@@ -9,15 +9,14 @@ const express = require("express")
 const app = express()
 const config = require("./config/index")
 
-const model = require("./app/models/models")
-
 /** 
 	SET express variable
 **/
 app.set("env", ENV)
 
-require("./express").init(app)
 require("./mongoose").init(app)
+require("./express").init(app)
+
 
 
 /**
