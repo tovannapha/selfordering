@@ -1,5 +1,8 @@
+'use strict'
+
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
+const ObjectId = Schema.ObjectId
 
 
 /*
@@ -8,7 +11,7 @@ const Schema = mongoose.Schema
 const restaurant_schema = new Schema({
 	name: String,
 	location: { x: String, y: String },
-	type: { type: Schema.Types.ObjectId, ref: "RestaurantType" },
+	type: { type: ObjectId, ref: "RestaurantType" },
 	address: { province: String, district: String, detail: String },
 	phones: [String],
 	socillinks: [String],
@@ -42,7 +45,7 @@ const restaurant_type_schema = new Schema({
 	menu schema
 */
 const menu_schema = new Schema({
-	restaurant_id: {type: Schema.Types.ObjectId, ref: "Restaurant"},
+	restaurant_id: {type: ObjectId, ref: "Restaurant"},
 	name: String,
 	category: [String],
 	pictures: [String],
@@ -72,14 +75,14 @@ const order_schema = new Schema({
 	checkin_time: Date,
 	checkout_time: Date,
 	menus: [{
-		menu_id: {type: Schema.Types.ObjectId, ref: "Menu"},
+		menu_id: {type: ObjectId, ref: "Menu"},
 		amount: Number,
 		comment: String,
-		ordered_at: date,
+		ordered_at: Date,
 		ordered_by: { isEmployee: Boolean, orderer_id: String },
 	}],
 	table_no: String,
-	restaurant_id: {type: Schema.Types.ObjectId, ref: "Restaurant"},
+	restaurant_id: {type: ObjectId, ref: "Restaurant"},
 	total_price: Number
 })
 
@@ -89,7 +92,7 @@ const order_schema = new Schema({
 	User schema
 */
 const user_schema = new Schema({
-	_id: ,
+	_id: Schema.Types.ObjectId,		// To create custom _id
 	name: String,
 	fullname: String,
 	password: String,
@@ -106,16 +109,16 @@ const user_schema = new Schema({
 	owner or Employee schema
 */
 const ownerOrEmployee_schema = new Schema({
-	_id: ,
+	_id: Schema.Types.ObjectId,
 	name: String,
 	password: String,
 	email: String,
 	phonenumber: String,
 	employee_id: String,
 	last_login: Date,
-	restaurant_id: {type: Schema.Types.ObjectId, ref: "Restaurant"},
+	restaurant_id: {type: ObjectId, ref: "Restaurant"},
 	position: Object,
-	social_login: [String]
+	social_login: [String],
 	phonenumber: String
 })
 
@@ -135,8 +138,8 @@ const cupon_schema = new Schema({
 	review schema
 */
 const review_schema = new Schema({
-	user_id: {type: Schema.Types.ObjectId, ref: "User"},
-	restaurant_id: {type: Schema.Types.ObjectId, ref: "Restaurant"},
+	user_id: {type: ObjectId, ref: "User"},
+	restaurant_id: {type: ObjectId, ref: "Restaurant"},
 	review_detail: String,
 })
 
@@ -145,8 +148,8 @@ const review_schema = new Schema({
 	rate schema
 */
 const rate_schema = new Schema({
-	user_id: {type: Schema.Types.ObjectId, ref: "User"},
-	restaurant_id: {type: Schema.Types.ObjectId, ref: "Restaurant"},
+	user_id: {type: ObjectId, ref: "User"},
+	restaurant_id: {type: ObjectId, ref: "Restaurant"},
 	rate_point: Number,
 	comment: String
 })
@@ -164,7 +167,7 @@ module.exports.Order = mongoose.model("Order", order_schema, "Order")
 module.exports.User = mongoose.model("User", user_schema, "User")
 module.exports.OwnerOrEmployee = mongoose.model("OwnerOrEmployee", ownerOrEmployee_schema, "OwnerOrEmployee")
 module.exports.Cupon = mongoose.model("Cupon", cupon_schema, "Cupon")
-module.exports.Review = mongoose.model("Review", review, "Review")
+module.exports.Review = mongoose.model("Review", review_schema, "Review")
 module.exports.Rate = mongoose.model("Rate", rate_schema, "Rate")
 
 
