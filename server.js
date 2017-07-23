@@ -49,7 +49,6 @@ app.use('/graphiql', graphiqlExpress({
 let server = http.createServer(app)
 server.listen(
 	config.port || DEFAULT_PORT, 
-	config.hostname || DEFAULT_HOSTNAME,
 	() => {
 		console.log(`SERVER is listening on port: ${config.port}`);
 		console.log(`With environment: ${ENV.toLowerCase()}`);
