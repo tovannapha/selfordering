@@ -8,7 +8,7 @@ mongoose.Promise = global.Promise	// to prevent deprecation warning
 module.exports.init = (app) => {
 
 	mongoose.connect(config.mongodb.uri, {useMongoClient: true})
-		.then(() => console.log("SUCESS connecting DB "))
+		.then(() => console.log(config.mongodb.uri))
 		.catch(() => console.log("FAILED connecting DB"))
 
 	// If Node process end then cleanup the connection

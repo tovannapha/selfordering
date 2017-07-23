@@ -14,7 +14,7 @@ const restaurant_schema = new Schema({
 	type: { type: ObjectId, ref: "RestaurantType" },
 	address: { province: String, district: String, detail: String },
 	phones: [String],
-	socillinks: [String],
+	sociallinks: [String],
 	pictures: [String],
 	tags: [String],
 	budgets: { lowerbound: Number, upperbound: Number, currency: String },
