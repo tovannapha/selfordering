@@ -7,10 +7,10 @@ import { resolvers } from './resolver/index';
 
 const typeDefs = `
 #############################################################
-###  Restuarant Type
+###  Restaurant Type
 #############################################################
 
-type Restuarant{
+type Restaurant{
   id : ID!
   name : String
   location : Location
@@ -32,7 +32,7 @@ type Restuarant{
   remark : String
 }
 
-input RestuarantInput{
+input RestaurantInput{
   name : String
   location : LocationInput
   address : AddressInput
@@ -112,11 +112,16 @@ input ParkingLotInput{
 
 
 #############################################################
-###  RestuarantType Type
+###  RestaurantType Type
 #############################################################
 
-type RestuarantType{
+type RestaurantType{
   id: ID!
+  name :String
+  slug : String
+  description : String
+}
+input RestaurantTypeInput{
   name :String
   slug : String
   description : String
@@ -129,7 +134,17 @@ type RestuarantType{
 
 type Menu{
   id: ID!
-  restuarant_id : ID!
+  restaurant_id : Restaurant
+  name :String
+  category: [String]
+  pictures : [String]
+  price: Int
+  currency: String
+  description : String
+  discount : String  ##Check!!
+}
+input MenuInput{
+  restaurant_id : ID!
   name :String
   category: [String]
   pictures : [String]
@@ -149,6 +164,11 @@ type MenuCategory{
   slug : String
   description : String
 }
+input MenuCategoryInput{
+  name :String
+  slug : String
+  description : String
+}
 
 #############################################################
 ###  Order Type
@@ -161,9 +181,33 @@ type Order{
   checkin_time: String
 	checkout_time: String
   table_no: String,
-  menus: [Menu]
-	restaurant_id: ID!,
+  menus: [OderMenu]
+	restaurant_id: Restaurant
 	total_price: Int
+}
+input OrderInput{
+  barcode_id :  String
+  people : Int
+  checkin_time: String
+	checkout_time: String
+  table_no: String,
+  menus: [OderMenuInput]
+	restaurant_id: ID!
+	total_price: Int
+}
+
+type OderMenu{
+  id: ID!,
+  menu_id:  Menu,
+	amount: Int
+	comment: String
+	ordered_at: String
+}
+input OderMenuInput{
+  menu_id: ID!,
+	amount: Int
+	comment: String
+	ordered_at: String
 }
 
 #############################################################
@@ -190,7 +234,7 @@ type User{
 
 type OwnerOrEmployee{
   id: ID!
-  _id: ID!
+  _id1: ID
 	name: String
 	password: String
 	email: String
@@ -202,6 +246,7 @@ type OwnerOrEmployee{
 	social_login: [String]
 	phonenumber: String
 }
+
 
 #############################################################
 ###  Cupon Type
@@ -250,10 +295,10 @@ type Review{
 
 # This type specifies the entry points into our API
 type Query {
-  restuarants: [Restuarant]
-  restuarant(id: ID!) : Restuarant
-  restuarant_types: [RestuarantType]
-  restuarant_type(id: ID!): RestuarantType
+  restaurants: [Restaurant]
+  restaurant(id: ID!) : Restaurant
+  restaurant_types: [RestaurantType]
+  restaurant_type(id: ID!): RestaurantType
   menus :[Menu]
   menu(id: ID!) : Menu
   menu_categories : [MenuCategory]
@@ -273,7 +318,11 @@ type Query {
 
 # The mutation root type, used to define all mutations
 type Mutation {
-  addRestuarant(data: RestuarantInput!) : Restuarant
+  addRestaurant(data: RestaurantInput!) : Restaurant
+  addRestaurantType(data:RestaurantTypeInput!) : RestaurantType
+  addMenu(data: MenuInput!): Menu
+  addMenuCategory(data: MenuCategoryInput!): MenuCategory
+  addOrder(data: OrderInput!): Order
 }
 
 
