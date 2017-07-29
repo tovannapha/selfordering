@@ -43,10 +43,10 @@ app.use(firebase.checkToken)
 /** 
 	GraphQL
 **/
-app.use('/graphql', bodyParser.json(), graphqlExpress({
-	schema
-	context: req
-}));
+app.use('/graphql', bodyParser.json(), graphqlExpress((req) => ({
+	schema,
+	context: req.user
+})));
 
 app.use('/graphiql', graphiqlExpress({
 	endpointURL: '/graphql',

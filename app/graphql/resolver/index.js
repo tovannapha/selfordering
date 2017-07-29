@@ -12,7 +12,12 @@ var Order = require('../../models/models').Order
 
 export const resolvers = {
   Query: {
-    restaurants: () => {
+    restaurants: (a,b,c) => {
+	console.log("a: ", a)
+	console.log("b: ", b)
+	console.log("c: ", c)
+	//console.log("d: ", d)
+
       return Restaurant.find();
     },
     restaurant: (root, { id }) => {
