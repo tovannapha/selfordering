@@ -45,6 +45,7 @@ app.use(firebase.checkToken)
 **/
 app.use('/graphql', bodyParser.json(), graphqlExpress({
 	schema
+	context: req
 }));
 
 app.use('/graphiql', graphiqlExpress({

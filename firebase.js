@@ -15,14 +15,12 @@ module.exports.checkToken = (req, res, next) => {
 	// Verify tokenId
 	admin.auth().verifyIdToken(tokenId)	
 	  .then(function(decodedToken) {
-	  	console.log(decodedToken)
+	    // Attach decodedToken(user object) in to req.user
 	    req.user = decodedToken
 
 	    next()
 
 	  }).catch(function(error) {
-	  	console.log(error)
-
 	    res.send("Invalid Token")
 	  });
 	 
