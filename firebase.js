@@ -18,10 +18,12 @@ module.exports.checkToken = (req, res, next) => {
 	    // Attach decodedToken(user object) in to req.user
 	    req.user = decodedToken
 
-	    next()
-
+	    
 	  }).catch(function(error) {
-	    res.send("Invalid Token")
+	    console.log("No user detail")
+	    req.user = "NULL"
 	  });
+
+	next()
 	 
 }
