@@ -38,7 +38,7 @@ input RestaurantInput{
   available_table_no : [String]
   reservable : String
   access : AccessInput
-  operation_days : String
+  operation_days : OperationDays
   capacity : [CapacityInput]
   parking_lot : ParkingLotInput
   feature : String
