@@ -22,7 +22,6 @@ type User{
 }
 
 input UserInput{
-  id: ID!
   _id: ID
   firebase_uid:String
   user_uuid: String

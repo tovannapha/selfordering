@@ -5,6 +5,8 @@ type Query {
   restaurant(id: ID!) : Restaurant
   restaurant_types: [RestaurantType]
   restaurant_type(id: ID!): RestaurantType
+  events: [Event]
+  event(id: ID!): Event
   menus :[Menu]
   menu(id: ID!) : Menu
   menu_categories : [MenuCategory]
@@ -18,6 +20,14 @@ type Query {
   reviews: [Review]
   review(id : ID!): Review
   rate(id : ID!): Rate
+  expenditures: [Expenditure]
+  expenditure(id : ID!): Expenditure
+  products :[Product]
+  product(id : ID!) : Product
+  product_types :[ProductType]
+  product_type(id : ID!) :ProductType
+  reservations : [Reservation]
+  reservation(id : ID!) : Reservation
 }
 `
 

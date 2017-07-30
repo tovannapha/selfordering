@@ -1,4 +1,4 @@
-'use strict'
+'use strict' 
 
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
@@ -125,7 +125,7 @@ const order_menu_schema = new Schema({
 	User schema
 */
 const user_schema = new Schema({
-	_id: Schema.Types.ObjectId,		// To create custom _id
+	//_id: Schema.Types.ObjectId,		// To create custom _id
 	firebase_uid:String,
 	user_uuid: String,
 	name: String,
@@ -275,3 +275,4 @@ module.exports.Expenditure = mongoose.model("Expenditure",expenditure_schema,"Ex
 module.exports.Product = mongoose.model("Product",product_schema,"Product")
 module.exports.ProductType= mongoose.model("ProductType",product_type_schema,"ProductType")
 module.exports.Reservation = mongoose.model("Reservation",reservation_schema,"Reservation")
+/**/

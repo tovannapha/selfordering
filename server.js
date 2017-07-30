@@ -14,57 +14,83 @@ import cors from 'cors';
 import { schema } from './app/graphql';
 import { execute, subscribe } from 'graphql';
 
-//import * as admin from "firebase-admin";
 
 const ENV = process.env.NODE_ENV || "development"
-const DEFAULT_PORT = 8000
+const DEFAULT_PORT = 3000
 const DEFAULT_HOSTNAME = '127.0.0.1'
 
 const firebase = require("./firebase")
 const app = express()
+const cluster = require("cluster")
 
 
-/** 
-	SET express variable
-**/
-app.set("env", ENV)
+/*
+	NODEJS Cluster
+*/
+if(cluster.isMaster) {
+	const numWorkers = require("os").cpus().length	// GET number of cpu' cores
+	console.log(`Master ${process.pid} is running`)
 
-require("./mongoose").init(app)
-require("./express").init(app)
-
-
-/** 
-	Firebase
-**/
-// CHECK for valid token
-app.use(firebase.checkToken)
-
-
-/** 
-	GraphQL
-**/
-app.use('/graphql', bodyParser.json(), graphqlExpress((req) => ({
-	schema,
-	context: req.user
-})));
-
-app.use('/graphiql', graphiqlExpress({
-	endpointURL: '/graphql',
-	subscriptionsEndpoint: `ws://localhost:4000/subscriptions`
-}));
-
-
-/**
-	START server
-**/
-let server = http.createServer(app)
-server.listen(
-	config.port || DEFAULT_PORT,
-	() => {
-		console.log(`SERVER is listening on port: ${config.port}`);
-		console.log(`With environment: ${ENV.toLowerCase()}`);
+	// Fork workers
+	console.log(`Master cluster setting up ${numWorkers} workers`)
+	for(var i = 0; i < numWorkers; i++) {
+		cluster.fork()
 	}
-)
+
+	// Listen for exit event (Worker died)
+	cluster.on("exit", (worker, code, signal) => {
+		console.log(`Worker ${worker.process.pid} died with CODE ${code} and SIGNAL ${signal}`);
+		console.log("Create new worker")
+		cluster.fork()
+	})
+}
+
+else {
 
 
-module.exports = server
+	/** 
+		SET express variable
+	**/
+	app.set("env", ENV)
+
+	require("./mongoose").init(app)
+	require("./express").init(app)
+
+
+	/** 
+		Firebase
+	**/
+	// CHECK for valid token
+	app.use(firebase.checkToken)
+
+
+	/** 
+		GraphQL
+	**/
+	app.use('/graphql', bodyParser.json(), graphqlExpress((req) => ({
+		schema,
+		context: req.user
+	})));
+
+	app.use('/graphiql', graphiqlExpress({
+		endpointURL: '/graphql',
+		subscriptionsEndpoint: `ws://localhost:4000/subscriptions`
+	}));
+
+
+	/**
+		START server
+	**/
+	let server = http.createServer(app)
+	server.listen(
+		config.port || DEFAULT_PORT,
+		() => {
+			console.log(`SERVER is listening on port: ${config.port}`);
+			console.log(`With environment: ${ENV.toLowerCase()}`);
+		}
+	)
+
+
+	module.exports = server
+
+}
