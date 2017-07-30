@@ -17,7 +17,7 @@ type Restaurant{
   available_table_no : [String]
   reservable : String
   access : Access
-  operation_days : String   ###check!
+  operation_days : OperationDays   ###check!
   cards : Card
   capacity : [Capacity]
   parking_lot : ParkingLot
@@ -38,7 +38,7 @@ input RestaurantInput{
   available_table_no : [String]
   reservable : String
   access : AccessInput
-  operation_days : OperationDays
+  operation_days : OperationDaysInput
   capacity : [CapacityInput]
   parking_lot : ParkingLotInput
   feature : String
