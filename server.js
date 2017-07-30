@@ -11,7 +11,7 @@ import {
 } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { schema } from './app/graphql/schema';
+import { schema } from './app/graphql';
 import { execute, subscribe } from 'graphql';
 
 //import * as admin from "firebase-admin";

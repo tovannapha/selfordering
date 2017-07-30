@@ -97,7 +97,7 @@ const menu_category_schema = new Schema({
 */
 const order_schema = new Schema({
 	barcode_id: String,
-	status:String
+	status:String,
 	people: Number,
 	checkin_time: Date,
 	checkout_time: Date,
@@ -137,7 +137,7 @@ const user_schema = new Schema({
 	last_login: Date,
 	social_login: [{
 		sns_type:String,
-		link
+		link: String,
 	}],
 	level:String,
 	secret: String,
@@ -201,7 +201,7 @@ const rate_schema = new Schema({
 const expenditure_schema = new Schema({
 	restaurant_id:{type:ObjectId,ref:"Restaurant"},
 	purchase_date:Date,
-	product_id:{type:ObjectId,ref:"ProductType"}
+	product_id:{type:ObjectId,ref:"ProductType"},
 	process_date:Date,
 	process_by:{type:ObjectId,ref:"User"},
 	comment:String
