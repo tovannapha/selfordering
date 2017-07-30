@@ -39,6 +39,7 @@ input RestaurantInput{
   reservable : String
   access : AccessInput
   operation_days : OperationDaysInput
+  cards : CardInput
   capacity : [CapacityInput]
   parking_lot : ParkingLotInput
   feature : String
