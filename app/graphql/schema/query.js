@@ -12,7 +12,7 @@ type Query {
   menu_categories : [MenuCategory]
   menu_category(id: ID!) : MenuCategory
   orders: [Order]
-  order(id: ID!): Order
+  order(barcode_id: ID!): Order
   users: [User]
   user(id: ID!) : User
   cupons : [Cupon]
