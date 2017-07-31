@@ -17,14 +17,14 @@ const Product = `
 
   input ProductInput{
     name:String
-	price:Int
-	amount:Int
-	pictures: [PicturesInput]
-	type: ID
-	expire_date:String
-	created_date:String
-	added_by:String
-	restaurant_id:String
+		price:Int
+		amount:Int
+		pictures: [PicturesInput]
+		type: ID
+		expire_date:String
+		created_date:String
+		added_by:String
+		restaurant_id:String
   }
 `
 

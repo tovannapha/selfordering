@@ -4,14 +4,13 @@ const Review = `
 #############################################################
 
 type Review{
-  id:ID!
+  id:ID
   user_id: User
   restaurant_id: Restaurant
   review_detail: String
 }
 
 input ReviewInput{
-  id:ID!
   user_id: ID!
   restaurant_id: ID!
   review_detail: String

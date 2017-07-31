@@ -23,6 +23,7 @@ type Restaurant{
   parking_lot : ParkingLot
   feature : String
   remark : String
+  event_id: Event
 }
 
 input RestaurantInput{
@@ -30,7 +31,7 @@ input RestaurantInput{
   location : LocationInput
   address : AddressInput
   phones: [String]
-  sociallinks: [String]
+  sociallinks: [SociallinksInput]
   pictures:[PicturesInput]
   tags : [String]
   budgets : BudgetInput

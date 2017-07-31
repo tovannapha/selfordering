@@ -3,7 +3,7 @@ const Rate = `
 ###  Rate Type
 #############################################################
   type Rate{
-    id:ID!
+    id:ID
     user_id: User
     restaurant_id: Restaurant
     rate_point: Int
@@ -11,7 +11,6 @@ const Rate = `
   }
 
   input RateInput{
-    id:ID!
     user_id: ID!
     restaurant_id: ID!
     rate_point: Int

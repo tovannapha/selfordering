@@ -16,7 +16,6 @@ type Reservation{
 	created_at:String
 }
 input ReservationInput{
-    id:ID
 	restaurant_id:String
 	user_id:String
 	nonuser_info:nonuserIntoInput

@@ -4,7 +4,7 @@ const Event = `
 #############################################################
 
 type Event{
-  id: ID!
+  id: ID
   user_id: User
   period: Period
   name : String
@@ -16,7 +16,6 @@ type Event{
 }
 
 input EventInput{
-  id: ID!
   user_id: ID
   period: PeriodInput
   name : String

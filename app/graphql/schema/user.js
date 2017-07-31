@@ -4,7 +4,7 @@ const User = `
 #############################################################
 
 type User{
-  id: ID!
+  id: ID
   _id: ID
   firebase_uid:String
   user_uuid: String

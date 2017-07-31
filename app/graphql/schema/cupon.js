@@ -4,7 +4,7 @@ const Cupon = `
 #############################################################
 
 type Cupon{
-  id: ID!
+  id: ID
   name: String
 	description: String
 	type: [String]
