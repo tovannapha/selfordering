@@ -114,168 +114,253 @@ export const resolvers = {
       return Restaurant.create(args.data)
     },
     editRestaurant: async (root, args) => {
-      await Restaurant.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Restaurant.findById(args.id)
+      await Restaurant.findByIdAndUpdate(args.id, { $set: args.data }, {new: true},(err,x)=> {
+        return x
+      })
     },
     deleteRestaurant: async (root, args) => {
-      await Restaurant.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Restaurant.findById(args.id)
+      await Restaurant.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addRestaurantType: async (root, args) => {
       return RestaurantType.create(args.data)
     },
     editRestaurantType: async (root, args) => {
-      await RestaurantType.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await RestaurantType.findById(args.id)
+      await RestaurantType.findByIdAndUpdate(args.id, { $set: args.data }, {new: true}, (err,x)=> {
+        return x
+      })
     },
     deleteRestaurantType: async (root, args) => {
-      await RestaurantType.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await RestaurantType.findById(args.id)
+      await RestaurantType.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addEvent: async (root, args) => {
       return Event1.create(args.data)
     },
     editEvent: async (root, args) => {
-      await Event1.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Event1.findById(args.id)
+      await Event1.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      });
+      
     },
     deleteEvent: async (root, args) => {
-      await Event1.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Event1.findById(args.id)
+      await Event1.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addMenu: async (root, args) => {
       return Menu.create(args.data)
     },
     editMenu: async (root, args) => {
-      await Menu.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Menu.findById(args.id)
+      await Menu.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteMenu: async (root, args) => {
-      await Menu.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Menu.findById(args.id)
+      await Menu.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addMenuCategory: async (root, args) => {
       return MenuCategory.create(args.data)
     },
     editMenuCategory: async (root, args) => {
-      await MenuCategory.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await MenuCategory.findById(args.id)
+      await MenuCategory.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteMenuCategory: async (root, args) => {
-      await MenuCategory.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await MenuCategory.findById(args.id)
+      await MenuCategory.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
     
     addOrder: async (root, args) => {
       return Order.create(args.data)
     },
     editOrder: async (root, args) => {
-      await Order.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Order.findById(args.id)
+      await Order.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteOrder: async (root, args) => {
-      await Order.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Order.findById(args.id)
+      await Order.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addUser: async (root, args) => {
       return User.create(args.data)
     },
     editUser: async (root, args) => {
-      await Order.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Order.findById(args.id)
+      await Order.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteUser: async (root, args) => {
-      await Order.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Order.findById(args.id)
+      await Order.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addCupon: async (root, args) => {
       return Cupon.create(args.data)
     },
     editCupon: async (root, args) => {
-      await Cupon.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Cupon.findById(args.id)
+      await Cupon.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteCupon: async (root, args) => {
-      await Cupon.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Cupon.findById(args.id)
+      await Cupon.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addReview: async (root, args) => {
       return Review.create(args.data)
     },
     editReview: async (root, args) => {
-      await Review.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Review.findById(args.id)
+      await Review.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteReview: async (root, args) => {
-      await Review.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Review.findById(args.id)
+      await Review.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addRate: async (root, args) => {
       return Rate.create(args.data)
     },
     editRate: async (root, args) => {
-      await Rate.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Rate.findById(args.id)
+      await Rate.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteRate: async (root, args) => {
-      await Rate.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Rate.findById(args.id)
+      await Rate.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addExpenditure: async (root, args) => {
       return Expediture.create(args.data)
     },
     editExpenditure: async (root, args) => {
-      await Expediture.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Expediture.findById(args.id)
+      await Expediture.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteExpenditure: async (root, args) => {
-      await Expediture.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Expediture.findById(args.id)
+      await Expediture.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addProduct: async (root, args) => {
       return Product.create(args.data)
     },
     editProduct: async (root, args) => {
-      await Product.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Product.findById(args.id)
+      await Product.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteProduct: async (root, args) => {
-      await Product.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Product.findById(args.id)
+      await Product.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addProductType: async (root, args) => {
       return ProductType.create(args.data)
     },
     editProductType: async (root, args) => {
-      await ProductType.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await ProductType.findById(args.id)
+      await ProductType.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteProductType: async (root, args) => {
-      await ProductType.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await ProductType.findById(args.id)
+      await ProductType.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
 
     addReservation: async (root, args) => {
       return Reservation.create(args.data)
     },
     editReservation: async (root, args) => {
-      await Reservation.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Reservation.findById(args.id)
+      await Reservation.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
+        return x
+      })
     },
     deleteReservation: async (root, args) => {
-      await Reservation.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Reservation.findById(args.id)
+      await Reservation.findByIdAndRemove(args.id, (err,x)=> {
+        if(err){
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
     },
   },
   Menu: {
