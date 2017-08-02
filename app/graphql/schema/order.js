@@ -10,7 +10,7 @@ type Order{
   people : Int
   checkin_time: String
 	checkout_time: String
-  order_menu_id: [OderMenu]
+  order_menu_id: [OrderMenu]
   table_no: String,
   move_history:[String] ##
 	restaurant_id: Restaurant
@@ -22,7 +22,7 @@ input OrderInput{
   people : Int
   checkin_time: String
 	checkout_time: String
-  order_menu_id: [OderMenuInput]
+  order_menu_id: [String]
   table_no: String,
   move_history:[String] ##
 	restaurant_id: String
@@ -30,14 +30,14 @@ input OrderInput{
   #reservation_id : ID
 }
 
-type OderMenu{
+type OrderMenu{
   id: ID!,
   menu_id:  Menu,
 	comment: String
 	ordered_at: String
   ordered_by: User
 }
-input OderMenuInput{
+input OrderMenuInput{
   menu_id: ID!,
 	amount: Int
 	comment: String

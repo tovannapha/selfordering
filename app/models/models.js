@@ -68,9 +68,7 @@ const restaurant_type_schema = new Schema({
 const menu_schema = new Schema({
 	restaurant_id: {type: ObjectId, ref: "Restaurant"},
 	name: String,
-	category: [{
-		type:ObjectId,ref:"Menu_category"
-	}],
+	category: [{type:ObjectId,ref:"Menu_categoy"}],
 	pictures: [{
 		filename:String,
 		picURL:String
@@ -78,7 +76,7 @@ const menu_schema = new Schema({
 	price: Number,
 	currency: String,
 	description: String,
-	discount: Object
+	discount: String
 })
 
 
@@ -168,7 +166,7 @@ const ownerOrEmployee_schema = new Schema({
 const cupon_schema = new Schema({
 	name: String,
 	description: String,
-	type: [Object],
+	cupon_type: [{x:String,y:String}],
 	period: { fromDate: Date, toDate: Date},
 	created_at:Date
 })
@@ -216,7 +214,7 @@ const product_schema= new Schema({
 		filename:String,
 		picURL:String
 	}],
-	type:{type:ObjectId,ref:"product_type"},
+	product_type:{type:ObjectId,ref:"ProductType"},
 	expire_date:Date,
 	created_date:Date,
 	added_by:{type:ObjectId,ref:"User"},
@@ -261,7 +259,7 @@ const reservation_schema = new Schema({
 module.exports.Restaurant = mongoose.model("Restaurant", restaurant_schema, "Restaurant")
 module.exports.RestaurantType = mongoose.model("RestaurantType", restaurant_type_schema, "RestaurantType")
 module.exports.Menu = mongoose.model("Menu", menu_schema, "Menu")
-module.exports.Menu_category = mongoose.model("Menu_category", menu_schema, "Menu_category")
+module.exports.Menu_category = mongoose.model("Menu_category", menu_category_schema, "Menu_category")
 module.exports.Order = mongoose.model("Order", order_schema, "Order")
 module.exports.User = mongoose.model("User", user_schema, "User")
 module.exports.OwnerOrEmployee = mongoose.model("OwnerOrEmployee", ownerOrEmployee_schema, "OwnerOrEmployee")

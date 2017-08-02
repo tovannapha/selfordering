@@ -231,15 +231,15 @@ export const resolvers = {
     },
 
     addExpenditure: async (root, args) => {
-      return Expediture.create(args.data)
+      return Expenditure.create(args.data)
     },
     editExpenditure: async (root, args) => {
-      await Expediture.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Expediture.findById(args.id)
+      await Expenditure.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
+      return await Expenditure.findById(args.id)
     },
     deleteExpenditure: async (root, args) => {
       await Expediture.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Expediture.findById(args.id)
+      return await Expenditure.findById(args.id)
     },
 
     addProduct: async (root, args) => {

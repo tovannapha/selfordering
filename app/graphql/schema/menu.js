@@ -17,7 +17,7 @@ type Menu{
 input MenuInput{
   restaurant_id : ID!
   name :String
-  category: [MenuCategoryInput]
+  category: [String]
   pictures : [PicturesInput]
   price: Int
   currency: String

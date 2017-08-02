@@ -8,7 +8,7 @@ type Event{
   user_id: User
   period: Period
   name : String
-  pictures: Pictures
+  pictures:[Pictures]
   details: String
   status : String
   comment : String
@@ -19,7 +19,7 @@ input EventInput{
   user_id: ID
   period: PeriodInput
   name : String
-  pictures: PicturesInput
+  pictures: [PicturesInput]
   details: String
   status : String
   comment : String

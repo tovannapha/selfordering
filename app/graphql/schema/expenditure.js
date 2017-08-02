@@ -15,7 +15,7 @@ const Expenditure = `
   input ExpenditureInput{
     restaurant_id:String
 		purchase_date:String
-		product_id:ProductInput
+		product_id:String
 		process_date:String
 		process_by:String
 		comment:String
