@@ -19,6 +19,7 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
+    "accesscontrol": "^1.5.2",
     "apollo-server-express": "^1.0.2",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",

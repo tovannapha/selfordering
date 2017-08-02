@@ -1,5 +1,6 @@
 import { PubSub } from 'graphql-subscriptions';
 import { withFilter } from 'graphql-subscriptions';
+import ac from '../../../acl';
 const pubsub = new PubSub();
 
 
@@ -27,6 +28,8 @@ export const resolvers = {
       console.log("b: ", b)
       console.log("c: ", c)
       //console.log("d: ", d)
+      var permission = ac.can('user').readAny('video');
+      console.log(permission)
 
       return Restaurant.find();
     },
@@ -295,14 +298,6 @@ export const resolvers = {
       return Expenditure.create(args.data)
     },
     editExpenditure: async (root, args) => {
-<<<<<<< HEAD
-      await Expenditure.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Expenditure.findById(args.id)
-    },
-    deleteExpenditure: async (root, args) => {
-      await Expediture.findByIdAndUpdate(args.id, { $set: args.data },(err,x)=> {});
-      return await Expenditure.findById(args.id)
-=======
       await Expediture.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
         return x
       })
@@ -315,7 +310,6 @@ export const resolvers = {
         var res_msg = "Successfully delete"
         return res_msg
       })
->>>>>>> 29f077f09ce578eee1b5a5a97b3e0fcafe2f7d60
     },
 
     addProduct: async (root, args) => {

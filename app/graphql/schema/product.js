@@ -20,7 +20,7 @@ const Product = `
 		price:Int
 		amount:Int
 		pictures: [PicturesInput]
-		product_type: ProductTypeInput
+		product_type: String
 		expire_date:String
 		created_date:String
 		added_by:String
