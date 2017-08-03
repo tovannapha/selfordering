@@ -119,29 +119,6 @@ const order_menu_schema = new Schema({
 	ordered_by:{type:ObjectId,ref:"User"}
 })
 
-/*
-	User schema
-*/
-const user_schema = new Schema({
-	//_id: Schema.Types.ObjectId,		// To create custom _id
-	firebase_uid:String,
-	user_uuid: String,
-	name: String,
-	fullname: String,
-	birthday:Date,
-	password: String,
-	email: String,
-	phonenumber: String,
-	last_login: Date,
-	social_login: [{
-		sns_type:String,
-		link: String,
-	}],
-	level:String,
-	secret: String,
-	created_at:Date
-})
-
 
 /*
 	owner or Employee schema
@@ -253,6 +230,51 @@ const reservation_schema = new Schema({
 })
 
 
+
+
+
+/*
+	User schema
+*/
+const user_schema = new Schema({
+	//_id: Schema.Types.ObjectId,		// To create custom _id
+	firebase_uid:String,
+	user_uuid: String,
+	name: String,
+	fullname: String,
+	birthday:Date,
+	password: String,
+	email: String,
+	phonenumber: String,
+	last_login: Date,
+	social_login: [{
+		sns_type:String,
+		data: String,
+	}],
+	level:String, // ADMIN DEVELOPER RESTAURANT
+	working_station:[
+		{
+			position : String, // RES_OWNER RES_MANAGER RES_WORKER
+			restaurant_id: {type: ObjectId, ref: "Restaurant"},
+		}
+	],
+	secret: String,
+	created_at:Date
+})
+
+/*
+	Acl schema
+*/
+const acl_schema = new Schema({
+	role: String,
+	resource:[String],
+	action:{ type: String, default: "read:any"},
+	attributes:{ type: [String], default: ["*"]},
+	updated_at:Date
+})
+
+
+
 /*********************
 	Models
 ***********************/
@@ -261,7 +283,6 @@ module.exports.RestaurantType = mongoose.model("RestaurantType", restaurant_type
 module.exports.Menu = mongoose.model("Menu", menu_schema, "Menu")
 module.exports.Menu_category = mongoose.model("Menu_category", menu_category_schema, "Menu_category")
 module.exports.Order = mongoose.model("Order", order_schema, "Order")
-module.exports.User = mongoose.model("User", user_schema, "User")
 module.exports.OwnerOrEmployee = mongoose.model("OwnerOrEmployee", ownerOrEmployee_schema, "OwnerOrEmployee")
 module.exports.Cupon = mongoose.model("Cupon", cupon_schema, "Cupon")
 module.exports.Review = mongoose.model("Review", review_schema, "Review")
@@ -274,3 +295,7 @@ module.exports.Product = mongoose.model("Product",product_schema,"Product")
 module.exports.ProductType= mongoose.model("ProductType",product_type_schema,"ProductType")
 module.exports.Reservation = mongoose.model("Reservation",reservation_schema,"Reservation")
 /**/
+
+/* User Schema Relation */
+module.exports.User = mongoose.model("User", user_schema, "User")
+module.exports.Acl = mongoose.model("Acl", acl_schema, "Acl")

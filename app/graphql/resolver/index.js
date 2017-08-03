@@ -24,11 +24,11 @@ var Reservation = require('../../models/models').Reservation
 export const resolvers = {
   Query: {
     restaurants: (a, b, c) => {
-      console.log("a: ", a)
+      /* console.log("a: ", a)
       console.log("b: ", b)
-      console.log("c: ", c)
+      console.log("c: ", c) */
       //console.log("d: ", d)
-      var permission = ac.can('user').readAny('video');
+      var permission = ac.can('admin').readAny('video11');
       console.log(permission)
 
       return Restaurant.find();
