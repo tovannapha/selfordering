@@ -24,6 +24,9 @@ const app = express()
 const cluster = require("cluster")
 
 
+app.use('*', cors());; 
+
+
 /*
 	NODEJS Cluster
 */
@@ -57,11 +60,13 @@ else {
 	require("./express").init(app)
 
 
+
 	/** 
 		Firebase
 	**/
 	// CHECK for valid token
 	app.use(firebase.checkToken)
+
 
 
 	/** 

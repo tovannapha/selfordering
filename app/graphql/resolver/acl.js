@@ -1,4 +1,4 @@
-/* 'use strict'
+'use strict'
 var AccessControl = require('accesscontrol');
 
 
@@ -137,4 +137,4 @@ var grantList = [
 ];
 var ac = new AccessControl(grantList);
 
-export default ac; */
+export default ac; 

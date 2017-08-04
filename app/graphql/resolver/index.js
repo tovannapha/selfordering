@@ -1,6 +1,7 @@
 import { PubSub } from 'graphql-subscriptions';
 import { withFilter } from 'graphql-subscriptions';
-import ac from '../../../acl';
+import ac from './acl';
+const specialcase = require("./specialcase")
 const pubsub = new PubSub();
 
 
@@ -21,15 +22,31 @@ var Product = require('../../models/models').Product
 var ProductType = require('../../models/models').ProductType
 var Reservation = require('../../models/models').Reservation
 
+var test = {
+  "level": "RESTAURANT",
+  "working_restaurant": [
+    {
+      "position": "RES_OWNER",
+      "restaurant_id":"12345"
+    }
+  ]
+}
+
 export const resolvers = {
   Query: {
-    restaurants: (a, b, c) => {
-      /* console.log("a: ", a)
-      console.log("b: ", b)
-      console.log("c: ", c) */
+    restaurants: (a, b, context, info) => {
+      // console.log("a: ", a)
+      // console.log("b: ", b)
+      // console.log("c: ", c)
       //console.log("d: ", d)
-      var permission = ac.can('admin').readAny('video11');
-      console.log(permission)
+
+      var lv = specialcase.checkLevel(test, "12345")
+       console.log(lv)
+
+
+      var permission = ac.can(lv).readAny('restaurants');
+      //specialcase.case1(); 
+      console.log(permission) 
 
       return Restaurant.find();
     },
