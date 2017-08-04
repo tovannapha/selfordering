@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "accesscontrol": "^1.5.2",
+    "apollo-errors": "^1.4.0",
     "apollo-server-express": "^1.0.2",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",

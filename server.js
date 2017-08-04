@@ -13,6 +13,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { schema } from './app/graphql';
 import { execute, subscribe } from 'graphql';
+import { formatError } from 'apollo-errors';
 
 
 const ENV = process.env.NODE_ENV || "development"
@@ -73,6 +74,7 @@ else {
 		GraphQL
 	**/
 	app.use('/graphql', bodyParser.json(), graphqlExpress((req) => ({
+		formatError,
 		schema,
 		context: req.user
 	})));

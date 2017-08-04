@@ -1,6 +1,7 @@
 import { PubSub } from 'graphql-subscriptions';
 import { withFilter } from 'graphql-subscriptions';
 import ac from './acl';
+import { FooError } from './error';
 const specialcase = require("./specialcase")
 const pubsub = new PubSub();
 
@@ -30,7 +31,8 @@ var test = {
       "restaurant_id":"12345"
     }
   ]
-}
+} 
+
 
 export const resolvers = {
   Query: {
@@ -39,16 +41,13 @@ export const resolvers = {
       // console.log("b: ", b)
       // console.log("c: ", c)
       //console.log("d: ", d)
-
       var lv = specialcase.checkLevel(test, "12345")
-       console.log(lv)
 
-
-      var permission = ac.can(lv).readAny('restaurants');
-      //specialcase.case1(); 
-      console.log(permission) 
-
-      return Restaurant.find();
+      var permission = ac.can(lv.position).readAny("restaurant");
+   
+      if(permission.granted){ 
+        return Restaurant.find();
+      }else{ throw new FooError()}
     },
     restaurant: (root, { id }) => {
       return Restaurant.findById(id);

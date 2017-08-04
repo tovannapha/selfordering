@@ -1,66 +1,63 @@
 'use strict'
 var AccessControl = require('accesscontrol');
 
+  
+ var grantList = [
 
-var grantList = [
-
-    {
-        role: ['DEVELOPER', 'ADMIN'],
-        resources: '*',
-        action: ['create:any', 'read:any', 'update:any', 'delete:any'],
+    // DEVELOPER, ADMIN acess list
+     {
+        role: 'DEVELOPER', 
+        resource: ['*'],
+        action: 'read:any',
         attributes: ['*']
     },
-    // { role: 'DEVELOPER', resource: '*', action: 'create:any', attributes: ['*'] },
-    // { role: 'DEVELOPER', resource: '*', action: 'read:any', attributes: ['*'] },
-    // { role: 'DEVELOPER', resource: '*', action: 'update:any', attributes: ['*'] },
-    // { role: 'DEVELOPER', resource: '*', action: 'delete:any', attributes: ['*'] },
-    //
-    // { role: 'ADMIN', resource: '*', action: 'create:any', attributes: ['*'] },
-    // { role: 'ADMIN', resource: '*', action: 'read:any', attributes: ['*'] },
-    // { role: 'ADMIN', resource: '*', action: 'update:any', attributes: ['*'] },
-    // { role: 'ADMIN', resource: '*', action: 'delete:any', attributes: ['*'] },
-
+     // Client access list
     {
-        role: ['CLIENT', 'GUEST'],
+        role: 'CLIENT',
         resource: [
             'restaurant', 'restaurants',
             'event', 'event',
             'menu', 'menus',
             'category', 'categories',
+            'order', 'addOrder',
             'cupon', 'cupons',
             'review', 'reviews', 'aadReview',
-            'Rate', 'Rates', 'addRate'
-        ],
-        action: ['read:any', 'create:any'],
-        attributes: ['*']
-    },
-    {
-        role: ['CLIENT', 'GUEST'],
-        resource: [
-            'order', 'addOrder',
             'editReview', 'deleteReview',
+            'Rate', 'Rates', 'addRate',
             'editRate', 'deleteRate',
             'user', 'editUser'
         ],
-        action: ['read:own', 'create:own', 'update:own', 'delete:own'],
+        action: 'read:any',
         attributes: ['*']
     },
+
+    //Guest access list
     {
-        role: 'OWNER',
+        role: 'GUEST',
         resource: [
             'restaurant', 'restaurants',
+            'event', 'event',
+            'menu', 'menus',
             'category', 'categories',
-            'product_type', 'product_types'
+            'order', 'addOrder',
+            'cupon', 'cupons',
+            'review', 'reviews',
+            'Rate', 'Rates'
         ],
-        action: 'read:any', attributes: ['*']
+        action: 'read:any',
+        attributes: ['*']
     },
 
+    // owner access list
     {
-        role: 'OWNER',
+        role: 'RES_OWNER',
         resource: [
+            'restaurant',
+            'product_type', 'product_types',
             'editRestaurant',
             'event', 'events', 'addEvent', 'editEvent', 'deleteEvent',
             'menu', 'menus', 'addMenu', 'editMenu', 'deleteMenu',
+            'category', 'categories',
             'order', 'orders', 'addOrder', 'editOrder', 'deleteOrder',
             'cupon', 'cupons', 'addCupon', 'editCupon', 'deleteCupon',
             'view', 'views',
@@ -69,28 +66,20 @@ var grantList = [
             'product', 'products', 'addProduct', 'editProduct', 'deleteProduct',
             'user', 'users', 'addUser', 'deleteUser'
         ],
-        action: [
-            'read:Restaurant', 'read:own',
-            'create:Restaurant', 'create:own',
-            'update:own', 'delete:own'],
+        action: 'read:any',
         attributes: ['*']
     },
+
+    // mangaer access list
     {
-        role: 'MANAGER',
-        resources: [
+        role: 'RES_MANAGER',
+        resource: [
             'restaurant',
             'event', 'events', 'addEvent', 'editEvent', 'deleteEvent',
             'menu_category', 'menu_categories',
-            'product_type', 'product_types'
-        ],
-        action: ['read:any', 'create:any', 'update:any', 'delete:any'],
-        attributes: ['*']
-    },
-    {
-        role: 'MANAGER',
-        resources: [
             'editRestaurant',
             'menu', 'menus', 'addMenu', 'editMenu', 'deleteMenu',
+            'product_type', 'product_types',
             'order', 'orders', 'addOrder', 'editOrder', 'deleteOrder',
             'cupon', 'cupons', 'addCupon', 'deleteCupon',
             'review', 'reviews', 'Rate', 'Rates',
@@ -98,25 +87,16 @@ var grantList = [
             'product', 'products', 'addProduct', 'editProduct', 'deleteProduct',
             'user', 'users', 'addUser', 'editUser', 'deleteUser'
         ],
-        action: [
-            'read:Restaurant', 'read:own',
-            'create:Restaurant', 'create:own',
-            'update:Restaurant', 'update:own',
-            'delete:Restaurant', 'delete:own'],
+        action: 'read:any',
         attributes: ['*']
     },
+
+    // Worker access list
     {
-        role: 'WORKER',
-        resources: [
+        role: 'RES_WORKER',
+        resource: [
             'menu_category', 'menu_categories',
-            'product_type', 'product_types'
-        ],
-   action: 'read:any',
-        attributes: ['*']
-    },
-    {
-        role: 'WORKER',
-        resources: [
+            'product_type', 'product_types',
             'restaurant',
             'menu', 'menus',
             'order', 'orders', 'addOrder', 'editOrder', 'deleteOrder',
@@ -124,17 +104,14 @@ var grantList = [
             'review', 'reviews', 'Rate', 'Rates',
             'product', 'products',
             'user', 'editUser'
-
         ],
-   action: [
-            'read:Restaurant',
-            'read:own',
-            'update:Restaurant',
-            'update:own'
-        ],
+        action: 'read:any',
         attributes: ['*']
-    }
-];
-var ac = new AccessControl(grantList);
+    } 
+];  
+ 
 
-export default ac; 
+
+ var ac = new AccessControl(grantList);
+
+export default ac;  

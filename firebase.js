@@ -21,7 +21,7 @@ module.exports.checkToken = async (req, res, next) => {
 
 	    console.log(decodedToken)
 	  }).catch(function(error) {
-	    console.log("No user detail")
+	    //console.log("No user detail")
 	    req.user = "NULL"
 	  })
 	}else{
