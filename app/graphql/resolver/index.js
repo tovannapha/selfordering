@@ -134,6 +134,7 @@ export const resolvers = {
     },
     editRestaurant: async (root, args) => {
       await Restaurant.findByIdAndUpdate(args.id, { $set: args.data }, {new: true},(err,x)=> {
+        console.log("x: ", x)
         return x
       })
     },
