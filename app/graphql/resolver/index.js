@@ -133,13 +133,13 @@ export const resolvers = {
       return Restaurant.create(args.data)
     },
     editRestaurant: async (root, args) => {
-      return await Restaurant.findByIdAndUpdate(args.id, { $set: args.data }, {new: true},(err,x)=> {
-        //console.log("x: ", x)
-        
+      return await Restaurant.findByIdAndUpdate(args.id, { $set: args.data }, {new: true}, (err, x) => {
+        if(err) return err
+        return x
       })
     },
     deleteRestaurant: async (root, args) => {
-      await Restaurant.findByIdAndRemove(args.id, (err,x)=> {
+      return await Restaurant.findByIdAndRemove(args.id, (err,x)=> {
         if(err){
           return "Error on delete"
         }
@@ -152,9 +152,7 @@ export const resolvers = {
       return RestaurantType.create(args.data)
     },
     editRestaurantType: async (root, args) => {
-      await RestaurantType.findByIdAndUpdate(args.id, { $set: args.data }, {new: true}, (err,x)=> {
-        return x
-      })
+      return await RestaurantType.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteRestaurantType: async (root, args) => {
       await RestaurantType.findByIdAndRemove(args.id, (err,x)=> {
@@ -170,9 +168,7 @@ export const resolvers = {
       return Event1.create(args.data)
     },
     editEvent: async (root, args) => {
-      await Event1.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      });
+      return await Event1.findByIdAndUpdate(args.id, { $set: args.data }, {new: true});
       
     },
     deleteEvent: async (root, args) => {
@@ -189,9 +185,7 @@ export const resolvers = {
       return Menu.create(args.data)
     },
     editMenu: async (root, args) => {
-      await Menu.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await Menu.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteMenu: async (root, args) => {
       await Menu.findByIdAndRemove(args.id, (err,x)=> {
@@ -207,9 +201,7 @@ export const resolvers = {
       return MenuCategory.create(args.data)
     },
     editMenuCategory: async (root, args) => {
-      await MenuCategory.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await MenuCategory.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteMenuCategory: async (root, args) => {
       await MenuCategory.findByIdAndRemove(args.id, (err,x)=> {
@@ -225,9 +217,7 @@ export const resolvers = {
       return Order.create(args.data)
     },
     editOrder: async (root, args) => {
-      await Order.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await Order.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteOrder: async (root, args) => {
       await Order.findByIdAndRemove(args.id, (err,x)=> {
@@ -243,9 +233,7 @@ export const resolvers = {
       return User.create(args.data)
     },
     editUser: async (root, args) => {
-      await Order.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await Order.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteUser: async (root, args) => {
       await Order.findByIdAndRemove(args.id, (err,x)=> {
@@ -261,9 +249,7 @@ export const resolvers = {
       return Cupon.create(args.data)
     },
     editCupon: async (root, args) => {
-      await Cupon.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await Cupon.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteCupon: async (root, args) => {
       await Cupon.findByIdAndRemove(args.id, (err,x)=> {
@@ -279,9 +265,7 @@ export const resolvers = {
       return Review.create(args.data)
     },
     editReview: async (root, args) => {
-      await Review.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await Review.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteReview: async (root, args) => {
       await Review.findByIdAndRemove(args.id, (err,x)=> {
@@ -297,9 +281,7 @@ export const resolvers = {
       return Rate.create(args.data)
     },
     editRate: async (root, args) => {
-      await Rate.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await Rate.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteRate: async (root, args) => {
       await Rate.findByIdAndRemove(args.id, (err,x)=> {
@@ -315,9 +297,7 @@ export const resolvers = {
       return Expenditure.create(args.data)
     },
     editExpenditure: async (root, args) => {
-      await Expediture.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await Expediture.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteExpenditure: async (root, args) => {
       await Expediture.findByIdAndRemove(args.id, (err,x)=> {
@@ -333,9 +313,7 @@ export const resolvers = {
       return Product.create(args.data)
     },
     editProduct: async (root, args) => {
-      await Product.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await Product.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteProduct: async (root, args) => {
       await Product.findByIdAndRemove(args.id, (err,x)=> {
@@ -351,9 +329,7 @@ export const resolvers = {
       return ProductType.create(args.data)
     },
     editProductType: async (root, args) => {
-      await ProductType.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await ProductType.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteProductType: async (root, args) => {
       await ProductType.findByIdAndRemove(args.id, (err,x)=> {
@@ -369,9 +345,7 @@ export const resolvers = {
       return Reservation.create(args.data)
     },
     editReservation: async (root, args) => {
-      await Reservation.findByIdAndUpdate(args.id, { $set: args.data }, {new: true} ,(err,x)=> {
-        return x
-      })
+      return await Reservation.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteReservation: async (root, args) => {
       await Reservation.findByIdAndRemove(args.id, (err,x)=> {
