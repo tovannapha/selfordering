@@ -1,11 +1,9 @@
 import { PubSub } from 'graphql-subscriptions';
 import { withFilter } from 'graphql-subscriptions';
 import ac from './acl';
-import { FooError } from './error';
+import { Error1, Error2, Error3, Error4 } from './error';
 const specialcase = require("./specialcase")
 const pubsub = new PubSub();
-
-
 
 var Restaurant = require('../../models/models').Restaurant
 var RestaurantType = require('../../models/models').RestaurantType
@@ -23,11 +21,11 @@ var Product = require('../../models/models').Product
 var ProductType = require('../../models/models').ProductType
 var Reservation = require('../../models/models').Reservation
 
-var test = {
+var testuser = {
   "level": "RESTAURANT",
   "working_restaurant": [
     {
-      "position": "RES_OWNER",
+      "position": "RES_WORKER",
       "restaurant_id":"12345"
     }
   ]
@@ -37,23 +35,47 @@ var test = {
 export const resolvers = {
   Query: {
     restaurants: (a, b, context, info) => {
-      // console.log("a: ", a)
-      // console.log("b: ", b)
-      // console.log("c: ", c)
-      //console.log("d: ", d)
-      var lv = specialcase.checkLevel(test, "12345")
 
-      var permission = ac.can(lv.position).readAny("restaurant");
-   
+      var lv = specialcase.checkLevel(testuser, "12345")
+      var permission = ac.can(lv.position).readAny("restaurants");
+
       if(permission.granted){ 
         return Restaurant.find();
-      }else{ throw new FooError()}
+      }else{ throw new Error1()}
+
     },
-    restaurant: (root, { id }) => {
-      return Restaurant.findById(id);
+    restaurant: (root, { id }, context, info) => {
+      var lv = specialcase.checkLevel(testuser, "12345")  // context is user obj
+      var permission = ac.can(lv.position).readAny("restaurant");
+      var case1 = specialcase.case1(testuser, info.path.key, id)  
+
+      if(permission.granted){
+        if(case1){
+          return Restaurant.findById(id);
+        } else {
+          throw new Error1()
+        }
+      }else{
+        throw new Error1()
+      }
+      
     },
     restaurant_types: () => {
-      return RestaurantType.find();
+      var lv = specialcase.checkLevel(test, "12345")  // context is user obj
+      var permission = ac.can(lv.position).readAny("restaurant");
+      var case1 = specialcase.case1(test, info.path.key, id)  // TODO: change info
+
+      if(permission.granted){
+        if(case1){
+          return RestaurantType.find();
+        } else {
+          throw new Error1()
+        }
+      }else{
+        throw new Error1()
+      }
+
+      
     },
     restaurant_type: (root, { id }) => {
       return RestaurantType.findById(id);

@@ -13,7 +13,7 @@ exports.checkLevel = (user, restaurant_id) => {
 	return lv
 }
 
-var case1 = async  function (user,route,restaurant_id){
+exports.case1 = async  function (user,route,restaurant_id){
 	
 	var lv;
 
@@ -32,7 +32,7 @@ var case1 = async  function (user,route,restaurant_id){
 }
 
 
-var case2 = (user, accessroute, restaurant_id) => {
+exports.case2 = (user, accessroute, restaurant_id) => {
 	var collection = ""
 	// Define which collection
 	if (accessroute.indexOf("Review") >= 0){
