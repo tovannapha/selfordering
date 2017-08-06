@@ -133,10 +133,7 @@ export const resolvers = {
       return Restaurant.create(args.data)
     },
     editRestaurant: async (root, args) => {
-      await Restaurant.findByIdAndUpdate(args.id, { $set: args.data }, {new: true},(err,x)=> {
-        console.log("x: ", x)
-        return x
-      })
+      return await Restaurant.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
     },
     deleteRestaurant: async (root, args) => {
       await Restaurant.findByIdAndRemove(args.id, (err,x)=> {
