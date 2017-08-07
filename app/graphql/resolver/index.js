@@ -37,20 +37,30 @@ var test = {
 export const resolvers = {
   Query: {
     restaurants: (a, b, context, info) => {
-      // console.log("a: ", a)
-      // console.log("b: ", b)
-      // console.log("c: ", c)
-      //console.log("d: ", d)
+      //ເຊັກເລເວວຂອງຢູເຊີ
       var lv = specialcase.checkLevel(test, "12345")
-
-      var permission = ac.can(lv.position).readAny("restaurant");
-   
+      //ເຊັກຄວາມສາມາດເຂົ້າເຖິງຂອງຢູເຊີ
+      var permission = ac.can(lv.position).readAny("restaurants");
+         
       if(permission.granted){ 
         return Restaurant.find();
-      }else{ throw new FooError()}
+      }else{ 
+        throw new FooError()
+      }
     },
-    restaurant: (root, { id }) => {
-      return Restaurant.findById(id);
+    restaurant: (root, { id }, context, info) => {
+      //ເຊັກເລເວວຂອງຢູເຊີ
+      var lv = specialcase.checkLevel(test, "12345")
+      //ເຊັກຄວາມສາມາດເຂົ້າເຖິງຂອງຢູເຊີ
+      var permission = ac.can(lv.position).readAny("restaurant");
+
+      if(permission.granted){ 
+        if(specialcase.case1(test, info.path.key,"12345")) return Restaurant.findById(id);
+        else throw new FooError()
+      }else{ 
+        throw new FooError()
+      }
+      
     },
     restaurant_types: () => {
       return RestaurantType.find();

@@ -13,7 +13,7 @@ exports.checkLevel = (user, restaurant_id) => {
 	return lv
 }
 
-var case1 = async  function (user,route,restaurant_id){
+exports.case1 = async  function (user,route,restaurant_id){
 	
 	var lv;
 
