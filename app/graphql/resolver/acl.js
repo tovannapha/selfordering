@@ -1,22 +1,28 @@
 'use strict'
 var AccessControl = require('accesscontrol');
 
-  
+
  var grantList = [
 
     // DEVELOPER, ADMIN acess list
      {
-        role: 'DEVELOPER', 
+        role: 'DEVELOPER',
         resource: ['*'],
         action: 'read:any',
         attributes: ['*']
     },
+    {
+       role: 'ADMIN',
+       resource: ['users','events'],
+       action: 'read:any',
+       attributes: ['*']
+   },
      // Client access list
     {
         role: 'CLIENT',
         resource: [
             'restaurant', 'restaurants',
-            'event', 'event',
+            'events', 'event',
             'menu', 'menus',
             'category', 'categories',
             'order', 'addOrder',
@@ -36,7 +42,7 @@ var AccessControl = require('accesscontrol');
         role: 'GUEST',
         resource: [
             'restaurant', 'restaurants',
-            'event', 'event',
+            'events', 'event',
             'menu', 'menus',
             'category', 'categories',
             'order', 'addOrder',
@@ -107,11 +113,11 @@ var AccessControl = require('accesscontrol');
         ],
         action: 'read:any',
         attributes: ['*']
-    } 
-];  
- 
+    }
+];
+
 
 
  var ac = new AccessControl(grantList);
 
-export default ac;  
+export default ac;

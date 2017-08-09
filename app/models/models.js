@@ -1,4 +1,4 @@
-'use strict' 
+'use strict'
 
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
@@ -34,7 +34,8 @@ const restaurant_schema = new Schema({
 	parking_lot: { status: Boolean, capacity: Number },
 	feature: String,
 	remark: String,
-	event_id:{type:ObjectId,ref:"RestaurantEvent"},
+	event_id:[{type:ObjectId,ref:"RestaurantEvent"}],
+	worker:[{type:ObjectId,ref:"User"}]
 })
 /*
 	restaurant_event Schema
@@ -115,6 +116,7 @@ const order_menu_schema = new Schema({
 		type:ObjectId,ref:"Menu"
 	}],
 	comment:String,
+	amount:Number,
 	ordered_at:Date,
 	ordered_by:{type:ObjectId,ref:"User"}
 })
@@ -145,6 +147,7 @@ const cupon_schema = new Schema({
 	description: String,
 	cupon_type: [{x:String,y:String}],
 	period: { fromDate: Date, toDate: Date},
+	restaurant_id: {type: ObjectId, ref: "Restaurant"},
 	created_at:Date
 })
 
