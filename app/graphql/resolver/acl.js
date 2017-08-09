@@ -13,7 +13,7 @@ var AccessControl = require('accesscontrol');
     },
     {
        role: 'ADMIN',
-       resource: ['users','events'],
+       resource: ['users','events','menus','menu','addOrder','orders','order'],
        action: 'read:any',
        attributes: ['*']
    },
