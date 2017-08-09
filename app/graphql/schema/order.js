@@ -22,7 +22,7 @@ input OrderInput{
   people : Int
   checkin_time: String
 	checkout_time: String
-  order_menu_id: [String]
+  order_menu_id: [OrderMenuInput]
   table_no: String,
   move_history:[String] ##
 	restaurant_id: String

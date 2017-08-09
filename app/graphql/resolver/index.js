@@ -5,6 +5,8 @@ import { Error1, Error2, Error3, Error4 } from './error';
 const specialcase = require("./specialcase")
 const pubsub = new PubSub();
 
+import _ from 'lodash';
+
 var Restaurant = require('../../models/models').Restaurant
 var RestaurantType = require('../../models/models').RestaurantType
 var Event1 = require('../../models/models').RestaurantEvent
@@ -22,7 +24,7 @@ var ProductType = require('../../models/models').ProductType
 var Reservation = require('../../models/models').Reservation
 
 var testuser = {
-  "level": "CLIENT",
+  "level": "ADMIN",
   "working_restaurant": [
     {
       "position": "RES_WORKER",
@@ -609,7 +611,7 @@ export const resolvers = {
       })
     },
 
-    addMenu: async (root, args) => {
+    addMenu: async (root, args,context,info) => {
       var lv = specialcase.checkLevel(testuser,"12345")
       if(lv.position=="ADMIN" || lv.position=="DEVELOPER"){
         return Menu.create(args.data);
@@ -731,13 +733,29 @@ export const resolvers = {
       // })
     },
 
-    addOrder: async (root, args) => {
+    addOrder: async (root, args,context,info) => {
       var lv = specialcase.checkLevel(testuser,"12345")
       var permission = ac.can(lv.position).readAny("addOrder");
       var case1 = specialcase.case1(testuser,info.path.key,"12345")
       if (permission.granted) {
         if(case1){
-          return Order.create(args.data);
+
+          var orderMenu =[];
+          var aaa = await args.data.order_menu_id.forEach(async function(x){
+              var orderMenuId = await OrderMenu.create(x)
+              orderMenu.push(orderMenuId._id)
+               return orderMenu
+          })
+
+          console.log(aaa)
+          
+          //console.log(args.data)
+          //return Order.create(args.data);
+
+
+
+
+
         }else {
           throw new Error1()
         }
@@ -746,7 +764,7 @@ export const resolvers = {
       }
       //return Order.create(args.data)
     },
-    editOrder: async (root, args) => {
+    editOrder: async (root,args,context,info) => {
       var lv = specialcase.checkLevel(testuser,"12345")
       if(lv.position=="ADMIN" || lv.position=="DEVELOPER"){
         return await Order.findByIdAndUpdate(args.id, { $set: args.data }, {new: true});
