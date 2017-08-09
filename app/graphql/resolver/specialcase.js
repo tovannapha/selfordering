@@ -1,28 +1,31 @@
 var User = require('../../models/models').User
 var Review = require('../../models/models').Review
 var Rate = require('../../models/models').Rate
+import ac from './acl';
 import * as _ from "lodash"
 
 exports.checkLevel = (user, restaurant_id) => {
 	var lv
+	console.log("user-lever:",user.level)
 	if(user.level == "RESTAURANT"){
 	    lv = _.find(user.working_restaurant,{'restaurant_id':restaurant_id})
 	}else{
 	    lv = { position: user.level }
+			console.log("lv:",lv)
 	}
 	return lv
 }
 
 exports.case1 = async  function (user,route,restaurant_id){
-	
+
 	var lv;
 
 	if(user.level == "RESTAURANT"){
-	    lv = _.find(user.working_res,{'restaurant_id': restaurant_id})
+	    lv = _.find(user.working_restaurant,{'restaurant_id': restaurant_id})
 	}else{
 	    lv = { position: user.level }
 	}
-
+	console.log("case1",lv)
 	if(lv){
 		var permission = ac.can(lv.position).readAny(route);
 		return permission.granted;
@@ -43,7 +46,7 @@ exports.case2 = (user, accessroute, restaurant_id) => {
 		collection = "User"
 	}
 
-	switch (collection) { 
+	switch (collection) {
 		case "Review":
 			Review.find({"user_id": user.id, "restaurant_id": restaurant_id}, (err, data) => {
 				if (data) { return true }
@@ -73,21 +76,10 @@ exports.case3 = (user, input) => {
 	switch (user.level) {
 		case "RES_OWNER":
 			if (OWNERCANDO[input.level]) { return true }
-			else return false 
+			else return false
 		case "RES_MANAGER":
 			if (MANAGERCANDO[input.level]) { return true }
 			else return false
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
