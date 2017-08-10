@@ -6,12 +6,12 @@ import * as _ from "lodash"
 
 exports.checkLevel = (user, restaurant_id) => {
 	var lv
-	console.log("user-lever:",user.level)
+	//console.log("user-lever:",user.level)
 	if(user.level == "RESTAURANT"){
 	    lv = _.find(user.working_restaurant,{'restaurant_id':restaurant_id})
 	}else{
 	    lv = { position: user.level }
-			console.log("lv:",lv)
+			//console.log("lv:",lv)
 	}
 	return lv
 }
