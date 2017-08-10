@@ -14,6 +14,7 @@ var Menu = require('../../../models/models').Menu
 var MenuCategory = require('../../../models/models').Menu_category
 var Order = require('../../../models/models').Order
 var User = require('../../../models/models').User
+var Acl = require('../../../models/models').Acl
 var Cupon = require('../../../models/models').Cupon
 var Review = require('../../../models/models').Review
 var Rate = require('../../../models/models').Rate
@@ -84,6 +85,7 @@ export const Mutation =  {
   //
     addRestaurantType: async (root, args) => {
       var lv = specialcase.checkLevel(testuser,"12345")
+      console.log("lv:",lv)
       if(lv.position=="ADMIN" || lv.position=="DEVELOPER"){
         return RestaurantType.create(args.data)
       }else {
@@ -918,4 +920,9 @@ export const Mutation =  {
         throw new Error1();
       }
     },
-  }
+    // addAlc:async(root,args)=>{
+    //   return Acl.create(args.data)
+    // },
+
+  };
+

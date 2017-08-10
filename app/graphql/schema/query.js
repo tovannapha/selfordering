@@ -28,6 +28,8 @@ type Query {
   product_type(id : ID!) :ProductType
   reservations : [Reservation]
   reservation(id : ID!) : Reservation
+  acls:[Acl]
+  acl(id:ID!):Acl
 }
 `
 

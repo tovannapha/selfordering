@@ -56,6 +56,10 @@ type Mutation {
   addReservation(data:ReservationInput):Reservation
   editReservation(id:ID data:ReservationInput):Reservation
   deleteReservation(id:ID):Reservation
+
+  addAcl(data:AclInput):Acl
+  editAcl(id:ID data:AclInput):Acl
+  deleteAcl(id:ID data:AclInput):Acl
 }
 `
 

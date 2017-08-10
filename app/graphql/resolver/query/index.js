@@ -22,12 +22,13 @@ var Expenditure = require('../../../models/models').Expenditure
 var Product = require('../../../models/models').Product
 var ProductType = require('../../../models/models').ProductType
 var Reservation = require('../../../models/models').Reservation
+var Acl = require('../../../models/models').Acl
 
 var testuser = {
   "level": "ADMIN",
   "working_restaurant": [
     {
-      "position": "RES_WORKER",
+      "position": "RES_OWNER",
       "restaurant_id":"12345"
     }
   ]
@@ -40,8 +41,7 @@ export const Query = {
       //ເຊັກເລເວວຂອງຢູເຊີ
       var lv = specialcase.checkLevel(testuser, "12345")
       //ເຊັກຄວາມສາມາດເຂົ້າເຖິງຂອງຢູເຊີ
-      var permission = ac.can(lv.position).readAny("restaurants");
-         
+      var permission = ac.can(lv.position).readAny("restaurants"); 
       if(permission.granted){ 
         return Restaurant.find();
       }else{ throw new Error1()}
@@ -65,25 +65,24 @@ export const Query = {
       }
     
     },
-    restaurant_types: () => {
-      var lv = specialcase.checkLevel(test, "12345")  // context is user obj
-      var permission = ac.can(lv.position).readAny("restaurant");
-      var case1 = specialcase.case1(test, info.path.key, id)  // TODO: change info
-    
-      if(permission.granted){
-        if(case1){
-          return RestaurantType.find();
-        } else {
-          throw new Error1()
-        }
+    restaurant_types: (a,b,context,info) => {
+      var lv = specialcase.checkLevel(testuser, "12345")  // context is user obj
+      if(lv.position=="ADMIN" || lv.position=="DEVELOPER"){
+        return RestaurantType.find()
       }else{
-        throw new Error1()
+        throw new Error1();
       }
     
     
     },
-    restaurant_type: (root, { id }) => {
-      return RestaurantType.findById(id);
+    restaurant_type: (root, { id },context,info) => {
+      var lv = specialcase.checkLevel(testuser, "12345")  // context is user obj
+      if(lv.position=="ADMIN" || lv.position=="DEVELOPER"){
+        return RestaurantType.findById(id);
+      }else{
+        throw new Error1();
+      }
+      //return RestaurantType.findById(id);
     },
     events: (a, b, context, info) => {
       var lv = specialcase.checkLevel(testuser, "12345")  // context is user obj
@@ -429,4 +428,12 @@ export const Query = {
       }
       //return Reservation.findById(id);
     },
+    // alcs:(a,b,context,info)=>{
+    //   var lv = specialcase.checkLevel(testuser,"12345")
+    //   if(lv.position=="Admin" || lv.position=="DEVELOPER"){
+    //       return Acl.find()
+    //   }else{
+    //       throw new Error1();
+    //   }
+    // },
   }

@@ -15,10 +15,16 @@ type User{
   email: String
   phonenumber: String
   last_login: String
-  social_login: [Sociallinks],
-  level:String
+  social_login: [Sociallinks]
   secret: String
   created_at:String
+  level:[Acl]
+  working_restaurant:[WorkingRestaurant]
+}
+
+type WorkingRestaurant{
+  position:Acl
+  restaurant_id:Restaurant
 }
 
 input UserInput{
@@ -32,11 +38,18 @@ input UserInput{
   email: String
   phonenumber: String
   last_login: String
-  social_login: [SociallinksInput],
-  level:String
+  social_login: [SociallinksInput]
   secret: String
   created_at:String
+  level:String
+  working_restaurant:[WorkingRestaurantInput]
 }
+
+input WorkingRestaurantInput{
+  position:String
+  restaurant_id:String
+}
+
 `
 
 export default User;

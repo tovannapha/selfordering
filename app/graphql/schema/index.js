@@ -5,6 +5,7 @@ import Menu from './menu';
 import MenuCategory from './menu_category';
 import Order from './order';
 import User from './user';
+import Acl from './acl';
 import Cupon from './cupon';
 import Review from './review';
 import Rate from './rate';
@@ -27,6 +28,7 @@ export default [
     MenuCategory, 
     Order, 
     User, 
+    Acl,
     Cupon, 
     Review, 
     Rate,
