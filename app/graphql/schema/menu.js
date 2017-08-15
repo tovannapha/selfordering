@@ -4,7 +4,7 @@ const Menu = `
 #############################################################
 
 type Menu{
-  id: ID!
+  id: ID
   restaurant_id : Restaurant
   name :String
   category: [MenuCategory]

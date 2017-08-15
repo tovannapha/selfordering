@@ -24,6 +24,7 @@ type Restaurant{
   feature : String
   remark : String
   event_id: Event
+  worker: [User]
 }
 
 input RestaurantInput{
@@ -45,7 +46,8 @@ input RestaurantInput{
   parking_lot : ParkingLotInput
   feature : String
   remark : String
-  event_id: String 
+  event_id: String
+  worker:[String] 
 }
 
 
