@@ -5,7 +5,7 @@ var chaiHttp = require('chai-http');
 var expect = chai.expect;
 var should = chai.should;
 
-var Restaurant = require('../app/models/models').Restaurant
+var Restaurant = require('../app/models/models').Restaurant.type
 
 chai.use(chaiHttp);
 
