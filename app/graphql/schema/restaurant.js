@@ -6,6 +6,7 @@ const Restaurant = `
 type Restaurant{
   id : ID!
   name : String
+  type : RestaurantType
   location : Location
   address : Address
   phones : [String]
@@ -29,6 +30,7 @@ type Restaurant{
 
 input RestaurantInput{
   name : String
+  type: String
   location : LocationInput
   address : AddressInput
   phones: [String]
@@ -114,8 +116,8 @@ type Capacity{
   seats: Int
 }
 input CapacityInput{
-  table : Int
-  chairs: Int
+  tables : Int
+  seats : Int
 }
 
 

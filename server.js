@@ -25,19 +25,22 @@ const app = express()
 const cluster = require("cluster")
 
 
-app.use('*', cors());; 
+
+
+
+app.use('*', cors());;
 
 
 /*
 	NODEJS Cluster
 */
-if(cluster.isMaster) {
+if (cluster.isMaster) {
 	const numWorkers = require("os").cpus().length	// GET number of cpu' cores
 	console.log(`Master ${process.pid} is running`)
 
 	// Fork workers
 	console.log(`Master cluster setting up ${numWorkers} workers`)
-	for(var i = 0; i < numWorkers; i++) {
+	for (var i = 0; i < numWorkers; i++) {
 		cluster.fork()
 	}
 
@@ -50,7 +53,8 @@ if(cluster.isMaster) {
 }
 
 else {
-
+	app.use(bodyParser.json({limit: '55mb'}));
+	
 
 	/** 
 		SET express variable
@@ -68,12 +72,13 @@ else {
 	// CHECK for valid token
 	app.use(firebase.checkToken)
 
-
+	//app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 
 	/** 
 		GraphQL
 	**/
-	app.use('/graphql', bodyParser.json(), graphqlExpress((req) => ({
+
+	app.use('/graphql', graphqlExpress((req) => ({
 		formatError,
 		schema,
 		context: req.user

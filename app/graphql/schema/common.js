@@ -11,13 +11,15 @@ input PeriodInput{
 
 
 type Pictures{
-  filename: String
+  filename: String!
+  mime: String!
   picURL: String
 }
 
 input PicturesInput{
-  filename: String
-  picURL: String
+  filename: String!
+  mime: String!
+  dataImage : String!
 }
 
 
@@ -28,6 +30,14 @@ type Sociallinks{
 input SociallinksInput{
   sns_type: String
   link : String
+}
+
+
+
+input UploadFile {
+  filename: String!
+  mime: String!
+  dataImage : String!
 }
 
 `

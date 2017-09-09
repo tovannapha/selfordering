@@ -19,8 +19,9 @@ const restaurant_schema = new Schema({
 		link:String
 	}],
 	pictures: [{
-		filename:String,
-		picURL:String
+		filename: String,
+		mime: String,
+		picURL : String,
 	}],
 	tags: [String],
 	budgets: { lowerbound: Number, upperbound: Number, currency: String },

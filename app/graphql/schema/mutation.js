@@ -60,7 +60,13 @@ type Mutation {
   addAcl(data:AclInput):Acl
   editAcl(id:ID data:AclInput):Acl
   deleteAcl(id:ID data:AclInput):Acl
+
+
+
+
 }
+
+
 `
 
 export default Mutation;
