@@ -9,6 +9,12 @@ aws.config.loadFromPath('./aws/s3_config.json');
 var s3 = new aws.S3();
 const awsLink = "https://s3-ap-southeast-1.amazonaws.com/self-order/";
 
+
+// Firebase
+const admin = require("firebase-admin");
+const firebase = require("../../../../firebase");
+
+
 const specialcase = require("./../specialcase")
 const pubsub = new PubSub();
 
@@ -22,6 +28,7 @@ var MenuCategory = require('../../../models/models').Menu_category
 var Order = require('../../../models/models').Order
 var User = require('../../../models/models').User
 var Acl = require('../../../models/models').Acl
+var AclResources = require('../../../models/models').AclResources
 var Cupon = require('../../../models/models').Cupon
 var Review = require('../../../models/models').Review
 var Rate = require('../../../models/models').Rate
@@ -47,13 +54,15 @@ export const Mutation = {
     var lv = specialcase.checkLevel(testuser, "12345")
     if (lv.position == "ADMIN" || lv.position == "DEVELOPER") {
 
+      console.log(args.data)
+
       for (let ii = 0; ii < args.data.pictures.length; ii++) {
         //Convert base64 to Blob
         var buf = new Buffer(args.data.pictures[ii].dataImage.replace(/^data:image\/\w+;base64,/, ""), 'base64');
         //Define upload s3 data format
         var uploadS3Data = {
           Bucket: 'self-order',
-          Key: 'restaurant/'+args.data.pictures[ii].filename,
+          Key: 'restaurant/' + args.data.pictures[ii].filename,
           Body: buf,
           ContentType: args.data.pictures[ii].mime,
           ACL: 'public-read'
@@ -61,20 +70,20 @@ export const Mutation = {
         //set pictures field format
         args.data.pictures[ii] = "";
         args.data.pictures[ii] = {
-          filename: 'restaurant/'+ args.data.pictures[ii].filename,
+          filename: 'restaurant/' + args.data.pictures[ii].filename,
           mime: args.data.pictures[ii].mime,
-          picURL : "https://s3-ap-southeast-1.amazonaws.com/self-order/"+'restaurant/' + args.data.pictures[ii].filename
+          picURL: "https://s3-ap-southeast-1.amazonaws.com/self-order/" + 'restaurant/' + args.data.pictures[ii].filename
         }
         //upload images to Aws S3
         s3.putObject(uploadS3Data, function (err, data) {
-              if (err) {
-                  console.log(err)
-              } else {
-                
-                  console.log(data);
-                  console.log("Successfully uploaded data to myBucket/myKey");
-              }
-          });
+          if (err) {
+            console.log(err)
+          } else {
+
+            console.log(data);
+            console.log("Successfully uploaded data to myBucket/myKey");
+          }
+        });
 
       }
 
@@ -450,6 +459,7 @@ export const Mutation = {
 
   addUser: async (root, args) => {
     var lv = specialcase.checkLevel(testuser, "12345")
+    console.log(args.data)
     if (lv.position == "ADMIN" || lv.position == "DEVELOPER") {
       return User.create(args.data);
     } else if (lv.position == "RES_OWNER" || lv.position == "RES_MANAGER") {
@@ -503,12 +513,20 @@ export const Mutation = {
     //return await Order.findByIdAndUpdate(args.id, { $set: args.data }, {new: true})
   },
   deleteUser: async (root, args) => {
+
+    console.log(args)
     var lv = specialcase.checkLevel(testuser, "12345")
     if (lv.position == "ADMIN" || lv.position == "DEVELOPER") {
-      await Order.findByIdAndRemove(args.id, (err, x) => {
+
+      //delete user in firebase
+      firebase.deleteUser(args.uid)
+
+      await User.findByIdAndRemove(args.id, (err, x) => {
         if (err) {
+          console.log("Error on delete")
           return "Error on delete"
         }
+        console.log("Successfully delete")
         var res_msg = "Successfully delete"
         return res_msg
       })
@@ -517,11 +535,23 @@ export const Mutation = {
       var case3 = specialcase.case3(testuser, info.path.key, "12345")
       if (permission.granted) {
         if (case3) {
-          await Order.findByIdAndRemove(args.id, (err, x) => {
+
+          //delete user in firebase
+          firebase.deleteUser(args.uid)
+
+          await User.findByIdAndRemove(args.id, (err, x) => {
             if (err) {
+              console.log(err)
+              console.log("Error on delete")
               return "Error on delete"
             }
-            var res_msg = "Successfully delete"
+            console.log("Successfully delete")
+            var res_msg = {
+              message: "Successfully delete",
+              data: {
+                id: x
+              }
+            }
             return res_msg
           })
         } else {
@@ -919,6 +949,8 @@ export const Mutation = {
     }
   },
 
+
+
   addReservation: async (root, args) => {
     var lv = specialcase.checkLevel(testuser, "12345")
     if (lv.position == "ADMIN" || lv.position == "DEVELOPER" || lv.position == "CLIENT") {
@@ -962,9 +994,99 @@ export const Mutation = {
       throw new Error1();
     }
   },
-  // addAlc:async(root,args)=>{
-  //   return Acl.create(args.data)
-  // },
+
+
+
+  addAcl: async (root, args) => {
+    return Acl.create(args.data)
+  },
+  editAcl: async (root, args) => {
+    return await Acl.findByIdAndUpdate(args.id, { $set: args.data }, { new: true })
+  },
+  deleteAcl: async (root, args) => {
+    var lv = specialcase.checkLevel(testuser, "12345")
+    if (lv.position == "ADMIN" || lv.position == "DEVELOPER") {
+      await Acl.findByIdAndRemove(args.id, (err, x) => {
+        if (err) {
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
+    } else if (lv.position == "RES_OWNER" || lv.position == "RES_MANAGER" || lv.position == "RES_WORKER") {
+      var permission = ac.can(lv.position).readAny("deleteReservation");
+      var case1 = specialcase.case1(testuser, info.path.key, "12345")
+      if (permission.granted) {
+        if (case1) {
+          await Acl.findByIdAndRemove(args.id, (err, x) => {
+            if (err) {
+              return "Error on delete"
+            }
+            var res_msg = "Successfully delete"
+            return res_msg
+          })
+        } else {
+          throw new Error1();
+        }
+      } else {
+        throw new Error1();
+      }
+    } else {
+      throw new Error1();
+    }
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+  addAclResources: async (root, args) => {
+    console.log(args.data)
+    return AclResources.create(args.data)
+  },
+  editAclResources: async (root, args) => {
+    return await AclResources.findByIdAndUpdate(args.id, { $set: args.data }, { new: true })
+  },
+  deleteAclResources: async (root, args) => {
+
+    var lv = specialcase.checkLevel(testuser, "12345")
+    if (lv.position == "ADMIN" || lv.position == "DEVELOPER") {
+      await AclResources.findByIdAndRemove(args.id, (err, x) => {
+        if (err) {
+          return "Error on delete"
+        }
+        var res_msg = "Successfully delete"
+        return res_msg
+      })
+    } else if (lv.position == "RES_OWNER" || lv.position == "RES_MANAGER" || lv.position == "RES_WORKER") {
+      var permission = ac.can(lv.position).readAny("deleteReservation");
+      var case1 = specialcase.case1(testuser, info.path.key, "12345")
+      if (permission.granted) {
+        if (case1) {
+          await AclResources.findByIdAndRemove(args.id, (err, x) => {
+            if (err) {
+              return "Error on delete"
+            }
+            var res_msg = "Successfully delete"
+            return res_msg
+          })
+        } else {
+          throw new Error1();
+        }
+      } else {
+        throw new Error1();
+      }
+    } else {
+      throw new Error1();
+    }
+  },
 
 
 };

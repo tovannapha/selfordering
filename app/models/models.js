@@ -270,13 +270,31 @@ const user_schema = new Schema({
 	Acl schema
 */
 const acl_schema = new Schema({
+	app_name: String,
 	role: String,
 	resource:[String],
 	action:{ type: String, default: "read:any"},
 	attributes:{ type: [String], default: ["*"]},
-	updated_at:Date
+	description:String,
+	code:String,
+	created_user:{type:ObjectId,ref:"User"},
+	updated_at:Date,
+	created_at:Date
 })
 
+const acl_resouces_schema = new Schema({
+	app_name: String,
+	role: String,
+	resource_name:String,
+	backfront:String,
+	description:String,
+	action:{ type: String, default: "read:any"},
+	attributes:{ type: [String], default: ["*"]},
+	code:String,
+	created_user:{type:ObjectId,ref:"User"},
+	updated_at:Date,
+	created_at:Date,
+})
 
 
 /*********************
@@ -303,3 +321,4 @@ module.exports.Reservation = mongoose.model("Reservation",reservation_schema,"Re
 /* User Schema Relation */
 module.exports.User = mongoose.model("User", user_schema, "User")
 module.exports.Acl = mongoose.model("Acl", acl_schema, "Acl")
+module.exports.AclResources = mongoose.model("AclResources", acl_resouces_schema, "AclResources")

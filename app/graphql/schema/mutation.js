@@ -27,7 +27,7 @@ type Mutation {
 
   addUser(data:UserInput):User
   editUser(id:ID  data:UserInput):User
-  deleteUser(id:ID):User
+  deleteUser(id:ID uid:String):User
 
   addCupon(data:CuponInput):Cupon
   editCupon(id:ID data:CuponInput):Cupon
@@ -61,7 +61,9 @@ type Mutation {
   editAcl(id:ID data:AclInput):Acl
   deleteAcl(id:ID data:AclInput):Acl
 
-
+  addAclResources(data:AclResourcesInput):AclResources
+  editAclResources(id:ID data:AclResourcesInput):AclResources
+  deleteAclResources(id:ID data:AclResourcesInput):AclResources
 
 
 }

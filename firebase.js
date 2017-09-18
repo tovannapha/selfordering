@@ -31,3 +31,14 @@ module.exports.checkToken = async (req, res, next) => {
 	next()
 	 
 }
+
+module.exports.deleteUser = async (uid) => {
+	console.log(uid)
+	admin.auth().deleteUser(uid)
+  .then(function() {
+    console.log("Successfully deleted user");
+  })
+  .catch(function(error) {
+    console.log("Error deleting user:", error);
+  });
+}

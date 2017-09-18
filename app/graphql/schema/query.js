@@ -30,6 +30,8 @@ type Query {
   reservation(id : ID!) : Reservation
   acls:[Acl]
   acl(id:ID!):Acl
+  aclResources:[AclResources]
+  aclResource(id:ID!):AclResources
 }
 `
 
